@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template
-import forms 
+import forms
 
 app = Flask(__name__)
 
@@ -9,16 +9,19 @@ def index():
 
 @app.route('/alumnos', methods=["GET","POST"])
 def alumnos():
+    nom = ""
+    apa = ""
+    ama = ""
     alum_form = forms.UserForm(request.form)
-    if request.method == "POST":
+    if request.method == "POST" and alum_form.validate():
         nom = alum_form.nombre.data
         apa = alum_form.apaterno.data
-        correo = alum_form.email.data
+        ama = alum_form.amaterno.data
         print("Nombre: {}".format(nom))
         print("apaterno: {}".format(apa))
-        print("correo: {}".format(correo))
+        print("amaterno: {}".format(ama))
 
-    return render_template('alumnos.html', form = alum_form, nom = nom, apa = apa, correo = correo)
+    return render_template('alumnos.html', form = alum_form, nom = nom, apa = apa, ama = ama)
 
 @app.route('/maestros')
 def maestros():
